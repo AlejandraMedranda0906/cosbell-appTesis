@@ -1,0 +1,16 @@
+/* Aplica a los inputs que tengan ambas clases: form-control y input-field */
+/*input.form-control.input-field {
+  min-width: 150px !important;
+  max-width: 500px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}*/
+.login{
+  color: #fff;
+}
+.login a{
+  color: #d39e00;
+  font-weight: 600;
+  text-decoration: none;
+}
+
