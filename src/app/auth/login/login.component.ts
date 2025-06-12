@@ -149,19 +149,22 @@ export class LoginComponent {
     password: ['', [Validators.required]]
   });
 
+  errorMsg = '';
+
   onLogin() {
     this.formLogin.markAllAsTouched();
+    if (this.formLogin.invalid) return;
 
-    if (this.formLogin.invalid) {
-      return;
-    }
+     const email = this.formLogin.value.email ?? '';
+     const password = this.formLogin.value.password ?? '';
+     this.authService.login({ email, password }).subscribe({
 
-    this.authService.login(this.formLogin.value).subscribe({
-      next: (res) => {
+        next: (res) => {
         localStorage.setItem('token', res.token);
         alert('Inicio de sesión exitoso');
-
+        
         // Redirección exacta según los roles del backend
+        
         switch (res.role) {
           case 'ADMIN':
             this.router.navigate(['/dashboard-admin']);
@@ -180,7 +183,96 @@ export class LoginComponent {
       error: (err) => {
         console.error(err);
         alert('Error de login: ' + (err.error?.message || 'Error desconocido'));
+        this.errorMsg = err.error?.message || 'Credenciales incorrectas';
       }
     });
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+ // const email = this.formLogin.value.email ?? ''; esto debajo de onlogin
+  //const password = this.formLogin.value.password ?? '';
+
+ // const email = this.formLogin.value.email ?? '';
+  //const password = this.formLogin.value.password ?? '';
+
+ /* this.authService.login({ email, password }).subscribe({
+    next: (res) => {
+      localStorage.setItem('token', res.token);
+      localStorage.setItem('role', res.role);
+
+      // Redirige según el rol
+      if (res.role === 'ADMIN') {
+        this.router.navigate(['/dashboard-admin']);
+      } else if (res.role === 'EMPLOYEE') {
+        this.router.navigate(['/dashboard-empleado']);
+      } else {
+        this.router.navigate(['/dashboard-cliente']);
+      }
+    },
+    error: (err) => {
+      this.errorMsg = err.error?.message || 'Credenciales incorrectas';
+    }
+  });
+}
+}*/
+
+
+
+
+/* import { Component, inject } from '@angular/core';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
+  imports: [CommonModule, ReactiveFormsModule]
+})
+export class LoginComponent {
+  fb = inject(FormBuilder);
+  authService = inject(AuthService);
+  router = inject(Router);
+
+  formLogin = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]]
+  });
+
+  errorMsg = '';
+
+  onLogin() {
+    this.formLogin.markAllAsTouched();
+    if (this.formLogin.invalid) return;
+
+    this.authService.login(this.formLogin.value).subscribe({
+      next: (res) => {
+        // Guarda el token y el rol si lo recibes
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('role', res.role);
+
+        // Redirige según el rol
+        if (res.role === 'ADMIN') {
+          this.router.navigate(['/dashboard-admin']);
+        } else if (res.role === 'EMPLOYEE') {
+          this.router.navigate(['/dashboard-empleado']);
+        } else {
+          this.router.navigate(['/dashboard-cliente']);
+        }
+      },
+      error: (err) => {
+        this.errorMsg = err.error?.message || 'Credenciales incorrectas';
+      }}); }}*/

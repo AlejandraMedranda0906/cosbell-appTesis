@@ -10,26 +10,22 @@ const API_URL = 'http://localhost:8080/api/auth';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
- /* login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${API_URL}/login`, credentials);
+  register(data: any): Observable<any> {
+    return this.http.post(`${API_URL}/register`, data);
   }
 
-  register(data: { name: string; email: string; password: string }): Observable<any> {
-    return this.http.post(`${API_URL}/register`, data);
-  }*/
+  login(data: { email: string, password: string }): Observable<{ token: string, role: string }> {
+    return this.http.post<{ token: string, role: string }>(`${API_URL}/login`, data);
+  }
 
-register(data: any): Observable<any> {
-  return this.http.post(`${API_URL}/register`, data);
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  getRole(): string | null {
+    return localStorage.getItem('role');
+  }
 }
-
-login(data: any): Observable<any> {
-  return this.http.post(`${API_URL}/login`, data);
-}
-
-
-}
-
-
 
 /*login(email: string, password: string) {
   return this.http.post<{message: string, token: string, role: string}>('/auth/login', { email, password });

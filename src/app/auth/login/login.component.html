@@ -65,15 +65,78 @@
 
 
 
-
-
-
-
   <button type="submit" class="btn btn-primary">Ingresar</button>
 </form>  FIND ES SI SIRVEE2-->
 
 
-<div class="row">
+
+<div class="row justify-content-center">
+  <div class="col-md-4 col-sm-6">
+    <div class="card auth auth-card">
+      <div class="card-body">
+        <form [formGroup]="formLogin" (ngSubmit)="onLogin()">
+          <div class="form-group">
+            <label for="email">Correo electrónico:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+              placeholder="ejemplo@correo.com"
+              [class.is-invalid]="formLogin.get('email')?.invalid && formLogin.get('email')?.touched"
+            >
+            <div class="invalid-feedback" *ngIf="formLogin.get('email')?.hasError('required') && formLogin.get('email')?.touched">
+              El correo es obligatorio
+            </div>
+            <div class="invalid-feedback" *ngIf="formLogin.get('email')?.hasError('email') && formLogin.get('email')?.touched">
+              El correo no es válido
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              formControlName="password"
+              placeholder="***********"
+              [class.is-invalid]="formLogin.get('password')?.invalid && formLogin.get('password')?.touched"
+            >
+            <div class="invalid-feedback" *ngIf="formLogin.get('password')?.hasError('required') && formLogin.get('password')?.touched">
+              La contraseña es obligatoria
+            </div>
+          </div>
+
+          <div *ngIf="errorMsg" class="alert alert-danger mt-2">
+            {{ errorMsg }}
+          </div>
+          <div class="text-center mt-3">
+            <button type="submit" class="btn btn-my" [disabled]="formLogin.invalid">Ingresar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="row">
   <div class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
     <div class="card auth">
       <div class="card-body auth-card">
@@ -120,4 +183,75 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- <div class="row justify-content-center">
+  <div class="col-md-4 col-sm-6">
+    <div class="card auth">
+      <div class="card-body">
+        <form [formGroup]="formLogin" (ngSubmit)="onLogin()">
+          <div class="form-group">
+            <label for="email">Correo electrónico:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+              placeholder="ejemplo@correo.com"
+              [class.is-invalid]="formLogin.get('email')?.invalid && formLogin.get('email')?.touched"
+            >
+            <div class="invalid-feedback" *ngIf="formLogin.get('email')?.hasError('required') && formLogin.get('email')?.touched">
+              El correo es obligatorio
+            </div>
+            <div class="invalid-feedback" *ngIf="formLogin.get('email')?.hasError('email') && formLogin.get('email')?.touched">
+              El correo no es válido
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              formControlName="password"
+              placeholder="***********"
+              [class.is-invalid]="formLogin.get('password')?.invalid && formLogin.get('password')?.touched"
+            >
+            <div class="invalid-feedback" *ngIf="formLogin.get('password')?.hasError('required') && formLogin.get('password')?.touched">
+              La contraseña es obligatoria
+            </div>
+          </div>
+
+          <div *ngIf="errorMsg" class="alert alert-danger mt-2">
+            {{ errorMsg }}
+          </div>
+
+          <div class="text-center mt-3">
+            <button type="submit" class="btn btn-my" [disabled]="formLogin.invalid">Ingresar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
